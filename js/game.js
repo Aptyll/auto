@@ -142,11 +142,17 @@ export class Game {
           this.removeOwned(p, r);
         }
         keeper.star = star + 1;
-        p.lastUpgrade = { defId, star: star + 1 };
+        (p.upgradeLog || (p.upgradeLog = [])).push({ defId, star: star + 1, unit: keeper });
         this.tryCombine(p, defId); // chain 2* -> 3*
         return;
       }
     }
+  }
+
+  // Defensive sweep: merge any def that somehow has 3+ copies lying around
+  combineAll(p) {
+    const ids = new Set(this.allUnits(p).map(u => u.defId));
+    for (const id of ids) this.tryCombine(p, id);
   }
 
   findBoardKey(p, unit) {

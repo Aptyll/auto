@@ -321,7 +321,7 @@ export class Renderer {
         ctx.beginPath(); ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2); ctx.fill();
       } else if (f.k === 'ring') {
         const p = 1 - f.t / 0.4;
-        ctx.globalAlpha = Math.max(0, f.t * 2.5);
+        ctx.globalAlpha = Math.min(1, Math.max(0, f.t * 2.5));
         ctx.strokeStyle = f.col; ctx.lineWidth = 2.5;
         ctx.beginPath(); ctx.arc(f.x, f.y, Math.max(1, f.max * Math.min(1, p + 0.2)), 0, Math.PI * 2); ctx.stroke();
       } else if (f.k === 'beam') {

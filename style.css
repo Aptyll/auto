@@ -145,6 +145,14 @@ body {
 .card-traits { display: flex; flex-direction: column; gap: 1px; font-size: 8px; font-weight: 600; white-space: nowrap; overflow: hidden; }
 .card-name { font-size: 9.5px; font-weight: 700; margin-top: 2px; line-height: 1.1; }
 .card-cost { position: absolute; top: 3px; right: 5px; font-size: 11px; font-weight: 800; color: #ffd166; }
+.card-owned {
+  position: absolute; top: 3px; left: 4px;
+  font-size: 8px; font-weight: 800; color: #8ad0ff;
+  background: rgba(16,26,50,.9); border: 1px solid rgba(138,208,255,.4);
+  padding: 1px 4px; border-radius: 5px; letter-spacing: .3px;
+}
+.card.combines .card-owned { color: #ffd166; border-color: rgba(255,209,102,.6); animation: pulse .9s infinite; }
+@keyframes pulse { 50% { transform: scale(1.12); } }
 .card.cost1 { border-color: #5a6a85; }
 .card.cost2 { border-color: #4d9e5c; }
 .card.cost3 { border-color: #4f82e0; }

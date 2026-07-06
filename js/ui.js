@@ -91,7 +91,8 @@ export class UI {
       card.innerHTML = `
         <div class="card-traits">${def.traits.map(t => `<span style="color:${TRAITS[t].color}">${TRAITS[t].icon} ${TRAITS[t].name}</span>`).join('')}</div>
         <div class="card-name">${def.name}</div>
-        <div class="card-cost">${def.cost}g</div>`;
+        <div class="card-cost">${def.cost}g</div>
+        ${owned > 0 ? `<div class="card-owned">${owned >= 2 ? '▲ MERGES!' : `owned ${owned}/3`}</div>` : ''}`;
       card.prepend(cv);
       requestAnimationFrame(() => {
         const dpr = Math.min(2, devicePixelRatio || 1);
@@ -105,6 +106,7 @@ export class UI {
         if (g.phase !== 'planning') return;
         if (g.buyUnit(p, i)) {
           this.renderAll();
+          this.celebrateUpgrades();
         } else {
           this.toast(p.gold < def.cost ? 'Not enough gold' : 'Bench is full');
         }
@@ -189,6 +191,30 @@ export class UI {
         this.renderAll();
       });
     }
+  }
+
+  // Toast + gold burst wherever a unit just star-upgraded
+  celebrateUpgrades() {
+    const p = this.game.human;
+    if (!p.upgradeLog || !p.upgradeLog.length) return;
+    for (const up of p.upgradeLog) {
+      const def = UNIT_BY_ID[up.defId];
+      this.toast(`⭐ ${def.name} merged into ${'★'.repeat(up.star)}!`, 2400);
+      const key = this.game.findBoardKey(p, up.unit);
+      let pos = null;
+      if (key) { const [r, c] = key.split(',').map(Number); pos = this.r.hexCenter(r, c); }
+      else { const bi = p.bench.indexOf(up.unit); if (bi !== -1) pos = this.r.benchCenter(bi); }
+      if (pos) {
+        for (let i = 0; i < 3; i++) {
+          this.r.fx.push({ k: 'ring', x: pos.x, y: pos.y, t: 0.35 + i * 0.12, max: this.r.hexW * (0.5 + i * 0.3), col: 'rgba(255,209,102,0.9)' });
+        }
+        for (let i = 0; i < 14; i++) {
+          const a = Math.random() * Math.PI * 2, v = 40 + Math.random() * 90;
+          this.r.fx.push({ k: 'spark', x: pos.x, y: pos.y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, t: 0.6, col: '#ffd166', r: 2 });
+        }
+      }
+    }
+    p.upgradeLog.length = 0;
   }
 
   popup(html) {
@@ -393,7 +419,9 @@ export class UI {
           p.bench[bench] = d.unit;
         }
       }
+      g.combineAll(p); // safety net: any 3 coexisting copies merge now
       this.renderAll();
+      this.celebrateUpgrades();
     };
     cv.addEventListener('pointerup', endDrag);
     cv.addEventListener('pointercancel', () => {
