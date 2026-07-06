@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0b1026">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Nebula Tactics</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+  <div id="topbar">
+    <div class="tb-left">
+      <span id="roundLbl">Round 1</span>
+      <span id="stageLbl" class="muted">Stage 1</span>
+      <span id="vsLbl" class="vs"></span>
+    </div>
+    <div class="tb-right">
+      <span class="hp-pill">♥ <b id="hpLbl">100</b><span class="hp-track"><i id="hpFill"></i></span></span>
+    </div>
+  </div>
+
+  <div id="opps"></div>
+
+  <div id="boardwrap">
+    <canvas id="cv"></canvas>
+    <div id="traits"></div>
+    <div id="itemBar"></div>
+    <div id="resultBanner"></div>
+    <div id="toast"></div>
+  </div>
+
+  <div id="shopPanel">
+    <div id="sellZone"></div>
+    <div class="shop-row1">
+      <button id="xpBtn" class="btn">BUY XP<small>4g</small></button>
+      <div class="lvl-box">
+        <span id="lvlLbl">Lv 2</span>
+        <span id="xpLbl" class="muted">0/2</span>
+        <span id="boardCount" class="muted"></span>
+        <span id="goldPill">⬡ <b id="goldLbl">6</b><em id="streakLbl"></em></span>
+      </div>
+      <button id="rerollBtn" class="btn">REROLL<small>2g</small></button>
+      <button id="lockBtn" class="btn small">🔒</button>
+    </div>
+    <div id="shopCards"></div>
+    <button id="fightBtn" class="btn primary">⚔ FIGHT</button>
+    <button id="speedBtn" class="btn primary" style="display:none">▶▶ 1x</button>
+  </div>
+
+  <div id="popup"><div id="popupCard"><button id="popupClose">✕</button><div id="popupBody"></div></div></div>
+
+  <div id="startScreen">
+    <div class="ss-inner">
+      <h1>NEBULA<br>TACTICS</h1>
+      <p class="ss-sub">A sci-fi auto-battler</p>
+      <div class="ss-help">
+        <p>⬡ Buy ships from a shared shop, drag them onto the hex grid.</p>
+        <p>★ Three copies merge into a stronger star level.</p>
+        <p>▲ Field ships that share traits to unlock fleet bonuses.</p>
+        <p>♥ Lose fights, lose hull. Last commander standing wins.</p>
+      </div>
+      <button id="playBtn" class="btn primary big">LAUNCH FLEET</button>
+    </div>
+  </div>
+
+</div>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
